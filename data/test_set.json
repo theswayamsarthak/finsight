@@ -1,0 +1,242 @@
+[
+  {
+    "question": "What are Apple's main supply chain risk factors?",
+    "ground_truth": "Apple faces supply chain risks including reliance on single or limited sources for critical components, risk of supply shortages and price increases, disruptions from natural disasters or geopolitical tensions, and financial instability of suppliers and contract manufacturers.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "How does Apple describe competition in its markets?",
+    "ground_truth": "Apple faces intense competition in all its markets including smartphones, personal computers, tablets, wearables, and services. Competitors include companies with greater resources, and Apple competes on innovation, product quality, ecosystem integration, and brand.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What foreign exchange risks does Apple face?",
+    "ground_truth": "Apple is exposed to foreign exchange rate risk because a significant portion of its revenue and costs are denominated in foreign currencies. The company uses hedging strategies to manage this exposure.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What are Apple's primary product categories?",
+    "ground_truth": "Apple's primary product categories include iPhone, Mac, iPad, Wearables/Home/Accessories, and Services.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "How does Apple describe its privacy and data security risks?",
+    "ground_truth": "Apple describes risks related to unauthorized access to user data, failure to comply with privacy laws, and reputational damage from security breaches as material risks to its business.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is Goldman Sachs tier-1 capital ratio?",
+    "ground_truth": "Goldman Sachs reports its Tier 1 capital ratio in its annual filings as a key regulatory capital metric. The standardized Tier 1 capital ratio as of December 2024 was approximately 14.4% to 16.8% depending on the measurement basis.",
+    "company": "GS",
+    "year": null,
+    "type": "numerical",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What were Goldman Sachs net revenues in Global Banking and Markets for 2024?",
+    "ground_truth": "Net revenues in Global Banking and Markets were $34.94 billion for 2024, 16% higher than 2023.",
+    "company": "GS",
+    "year": "2024",
+    "type": "numerical",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is Goldman Sachs net interest income for 2024?",
+    "ground_truth": "Net interest income in the consolidated statements of earnings was $8.06 billion for 2024.",
+    "company": "GS",
+    "year": "2024",
+    "type": "numerical",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What are Goldman Sachs main business segments?",
+    "ground_truth": "Goldman Sachs operates through two main segments: Global Banking and Markets, and Asset and Wealth Management.",
+    "company": "GS",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What regulatory capital risks does Goldman Sachs describe?",
+    "ground_truth": "Goldman Sachs describes risks from changes in capital requirements, stress testing, and the potential need to raise additional capital, which could dilute shareholders or restrict business activities.",
+    "company": "GS",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "How does Microsoft describe its cloud strategy?",
+    "ground_truth": "Microsoft describes its cloud strategy as providing integration across the technology stack while offering openness, improving time to value, reducing costs, and increasing agility. The cloud business benefits from three economies of scale including datacenters deploying resources at lower cost, aggregating diverse demand patterns, and multi-tenancy reducing maintenance costs.",
+    "company": "MSFT",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What are Microsoft's main revenue segments?",
+    "ground_truth": "Microsoft reports revenue across three segments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing.",
+    "company": "MSFT",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What cybersecurity risks does Microsoft describe?",
+    "ground_truth": "Microsoft describes risks from cyberattacks, security vulnerabilities, data breaches, and nation-state threats as material risks that could harm its products, services, reputation, and financial results.",
+    "company": "MSFT",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "How does Microsoft describe competition in cloud services?",
+    "ground_truth": "Microsoft competes in cloud services with companies including Amazon, Google, and others. The company competes on performance, reliability, security, and breadth of services offered through Azure.",
+    "company": "MSFT",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What AI-related risks does Microsoft describe in its filings?",
+    "ground_truth": "Microsoft describes AI risks including ethical concerns, regulatory scrutiny, potential for harmful outputs, competition in AI development, and the risk that AI investments may not generate expected returns.",
+    "company": "MSFT",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What regulatory and legal risks does Apple cite?",
+    "ground_truth": "Apple cites risks from antitrust investigations, privacy regulations, app store regulations, intellectual property disputes, and potential changes to laws governing its business practices globally.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "How does Goldman Sachs describe its liquidity risk management?",
+    "ground_truth": "Goldman Sachs manages liquidity risk through maintaining a liquidity reserve, diversifying funding sources, and stress testing its liquidity position under adverse scenarios.",
+    "company": "GS",
+    "year": null,
+    "type": "factual",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What does Microsoft say about its dividend and capital return policy?",
+    "ground_truth": "Microsoft describes returning capital to shareholders through dividends and share repurchases as part of its capital allocation strategy.",
+    "company": "MSFT",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What geopolitical risks does Apple describe in 2025?",
+    "ground_truth": "Apple describes geopolitical risks including trade disputes, tariffs, sanctions, and tensions affecting its global operations and supply chain particularly related to China manufacturing.",
+    "company": "AAPL",
+    "year": "2025",
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "How does Goldman Sachs describe its market risk exposure?",
+    "ground_truth": "Goldman Sachs describes market risk as the risk of loss from changes in market prices including interest rates, credit spreads, equity prices, and currency rates affecting its trading and investment positions.",
+    "company": "GS",
+    "year": null,
+    "type": "factual",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What does Apple say about its services revenue growth?",
+    "ground_truth": "Apple describes Services as a growing segment including App Store, Apple Music, iCloud, Apple TV+, and Apple Pay, with increasing revenue driven by its large installed base of active devices.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "How does Microsoft describe the role of AI in its business?",
+    "ground_truth": "Microsoft describes AI as central to its strategy, embedded across its product portfolio including Azure AI services, Microsoft 365 Copilot, GitHub Copilot, and Dynamics 365, driving growth and competitive differentiation.",
+    "company": "MSFT",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What does Goldman Sachs say about its investment banking revenues?",
+    "ground_truth": "Goldman Sachs reports investment banking revenues as part of its Global Banking and Markets segment, driven by advisory fees, equity underwriting, and debt underwriting activities.",
+    "company": "GS",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What are Apple's risks related to international operations?",
+    "ground_truth": "Apple faces international risks including compliance with local laws, currency fluctuations, tax regulations, trade restrictions, and political instability in key markets including China.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "How does Microsoft describe its research and development investments?",
+    "ground_truth": "Microsoft describes significant R&D investment across its segments to develop new products and services, improve existing offerings, and advance AI capabilities.",
+    "company": "MSFT",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does Apple say about its intellectual property strategy?",
+    "ground_truth": "Apple describes intellectual property including patents, trademarks, and trade secrets as critical to its competitive position, and cites risks from IP disputes and potential infringement claims.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "How does Goldman Sachs describe risks from interest rate changes?",
+    "ground_truth": "Goldman Sachs describes interest rate risk as affecting the value of its fixed income holdings, net interest income, and client borrowing activity, managed through hedging and balance sheet management.",
+    "company": "GS",
+    "year": null,
+    "type": "factual",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What does Microsoft say about its gaming business?",
+    "ground_truth": "Microsoft describes its gaming business including Xbox hardware, Xbox Game Pass subscriptions, and game content as part of its More Personal Computing segment.",
+    "company": "MSFT",
+    "year": null,
+    "type": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What climate related risks does Apple describe?",
+    "ground_truth": "Apple describes risks from climate change including physical risks to its supply chain from extreme weather events, and transition risks from regulations requiring reductions in carbon emissions.",
+    "company": "AAPL",
+    "year": null,
+    "type": "factual",
+    "difficulty": "hard"
+  },
+  {
+    "question": "How does Goldman Sachs describe its asset and wealth management business?",
+    "ground_truth": "Goldman Sachs describes Asset and Wealth Management as providing investment management and wealth advisory services to institutional and individual clients, generating management fees and incentive fees.",
+    "company": "GS",
+    "year": null,
+    "type": "factual",
+    "difficulty": "medium"
+  }
+]

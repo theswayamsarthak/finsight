@@ -1,0 +1,60 @@
+[
+  {
+    "question": "How did Goldman Sachs tier-1 capital ratio change from 2024 to 2025?",
+    "answer": "According to Source 3 [GS, 2025, 10-K, Source 3]:\nThe Tier 1 capital ratio decreased from 30.4% in December 2024 to 23.3% in December 2025. [GS, 2025, 10-K, Source 3]",
+    "failure_type": "cross_document_numerical",
+    "explanation": "TYPE A \u2014 Cross-document numerical: requires pulling figures from multiple filings and comparing them. RAG retrieves chunks independently \u2014 it has no memory across chunks.",
+    "top_rerank_score": 6.941,
+    "companies_retrieved": [
+      "GS"
+    ],
+    "fix": "N/A"
+  },
+  {
+    "question": "What was the total combined revenue of Apple and Microsoft in 2024?",
+    "answer": "Not found in provided documents.",
+    "failure_type": "arithmetic",
+    "explanation": "TYPE B \u2014 Arithmetic: requires computing a sum/difference across documents. RAG retrieves text, it does not compute. Fix: extract numbers first, compute separately.",
+    "top_rerank_score": 5.046,
+    "companies_retrieved": [
+      "MSFT",
+      "AAPL"
+    ],
+    "fix": "extract numbers first, compute separately."
+  },
+  {
+    "question": "Which company had the highest net interest income in 2024?",
+    "answer": "Based on the provided context, Goldman Sachs (GS) had the highest net interest income in 2024. \n\nSource 5 [GS, 2024, 10-K, Source 5]: \nNet interest income $ 8,056 million for 2024.",
+    "failure_type": "cross_document_comparison",
+    "explanation": "TYPE C \u2014 Cross-document comparison: requires ranking or comparing entities across filings. Fix: run separate queries per company, compare results in post-processing.",
+    "top_rerank_score": 3.137,
+    "companies_retrieved": [
+      "MSFT",
+      "AAPL",
+      "GS"
+    ],
+    "fix": "run separate queries per company, compare results in post-processing."
+  },
+  {
+    "question": "What specific percentage did Apple's services revenue grow in 2024?",
+    "answer": "According to Source 2 [AAPL, 2024, 10-K, Source 2]: \nServices net sales increased during 2024 compared to 2023 due primarily to higher net sales from advertising, the App Store \u00ae and cloud services. \nThe exact percentage of growth is not explicitly stated in the provided context.",
+    "failure_type": "precise_numerical",
+    "explanation": "TYPE D \u2014 Precise numerical: exact percentage or figure buried in tables. Fix: improve table extraction, ensure table chunks are prioritised in retrieval.",
+    "top_rerank_score": 5.417,
+    "companies_retrieved": [
+      "AAPL"
+    ],
+    "fix": "improve table extraction, ensure table chunks are prioritised in retrieval."
+  },
+  {
+    "question": "What are the exact capital adequacy ratios for Goldman Sachs under Basel III?",
+    "answer": "Based on the provided context:\n\n- CET1 capital ratio as of December 2025: 23.3% [GS, 2025, 10-K, Source 1]\n- Tier 1 capital ratio as of December 2025: 23.3% [GS, 2025, 10-K, Source 1]\n- Total capital ratio as of December 2025: 23.3% [GS, 2025, 10-K, Source 1]\n\nThese ratios are under Basel III.",
+    "failure_type": "technical_financial",
+    "explanation": "TYPE E \u2014 Technical financial terminology: Basel III, regulatory ratios use very specific language. Fix: domain-specific embeddings (FinBERT) or terminology expansion.",
+    "top_rerank_score": 4.838,
+    "companies_retrieved": [
+      "GS"
+    ],
+    "fix": "domain-specific embeddings (FinBERT) or terminology expansion."
+  }
+]

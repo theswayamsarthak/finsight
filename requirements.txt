@@ -1,0 +1,33 @@
+# Core RAG pipeline
+langchain==0.2.17
+langchain-core==0.2.43
+langchain-community==0.2.19
+langchain-openai==0.1.25
+langchain-text-splitters==0.2.4
+langsmith==0.1.147
+
+# Vector store and embeddings
+chromadb==0.5.23
+sentence-transformers==3.0.1
+
+# Retrieval
+rank-bm25==0.2.2
+
+# PDF and document parsing
+pdfplumber==0.11.4
+beautifulsoup4==4.12.3
+
+# LLM providers
+groq==0.11.0
+google-generativeai==0.8.3
+
+# Evaluation
+ragas==0.1.21
+datasets==2.21.0
+
+# SEC data
+sec-edgar-downloader==5.0.4
+
+# App
+streamlit==1.38.0
+python-dotenv==1.0.1

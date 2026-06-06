@@ -1,0 +1,26 @@
+{
+  "Semantic only": {
+    "faithfulness": 0.8636363636363636,
+    "answer_relevancy": 0.8924628261431484,
+    "context_precision": 0.32499999998375,
+    "context_recall": 0.5833333333333333
+  },
+  "Hybrid (BM25 + semantic)": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.701233365224221,
+    "context_precision": 0.5685185185022067,
+    "context_recall": 0.6833333333333333
+  },
+  "Hybrid + rerank": {
+    "faithfulness": 0.7024242424242424,
+    "answer_relevancy": 0.8660640364026438,
+    "context_precision": 0.66666666664,
+    "context_recall": 0.7333333333333333
+  },
+  "Full system (+ expansion)": {
+    "faithfulness": 0.6916666666666667,
+    "answer_relevancy": 0.7729559646479565,
+    "context_precision": 0.7888888888677777,
+    "context_recall": 0.9333333333333332
+  }
+}
