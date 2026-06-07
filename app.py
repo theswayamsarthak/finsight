@@ -1,5 +1,4 @@
 import sys
 import os
 sys.path.insert(0, os.path.abspath("."))
-
-from src.app import *
+exec(open("src/app.py").read())
