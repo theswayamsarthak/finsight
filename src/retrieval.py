@@ -1,92 +1,86 @@
-import chromadb
+import streamlit as st
+import json
+import numpy as np
 from sentence_transformers import SentenceTransformer
 from rank_bm25 import BM25Okapi
-import numpy as np
-import pickle
 import os
 
-# Load ChromaDB
-client = chromadb.PersistentClient(path="./data/chroma_db")
-collection = client.get_collection("finsight")
+@st.cache_resource
+def load_store():
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    path = os.path.join(base_dir, "data", "vector_store.json")
+    with open(path, "r") as f:
+        data = json.load(f)
+    embeddings = np.array(data["embeddings"], dtype=np.float32)
+    norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
+    embeddings = embeddings / np.where(norms == 0, 1, norms)
+    return {
+        "ids": data["ids"],
+        "documents": data["documents"],
+        "metadatas": data["metadatas"],
+        "embeddings": embeddings
+    }
 
-# Load embedding model
-model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+@st.cache_resource
+def get_model():
+    return SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
-# ── Build BM25 index ──────────────────────────────────────────────
-BM25_PATH = "./data/bm25_index.pkl"
-
-def build_bm25_index():
-    print("Building BM25 index...")
-    all_data = collection.get()
-    corpus = [doc.lower().split() for doc in all_data["documents"]]
+@st.cache_resource
+def get_bm25():
+    store = load_store()
+    corpus = [doc.lower().split() for doc in store["documents"]]
     bm25 = BM25Okapi(corpus)
-    # Save index + document IDs together
-    with open(BM25_PATH, "wb") as f:
-        pickle.dump({
-            "bm25": bm25,
-            "ids": all_data["ids"],
-            "documents": all_data["documents"],
-            "metadatas": all_data["metadatas"]
-        }, f)
-    print(f"✓ BM25 index built over {len(corpus)} documents")
-    return bm25, all_data["ids"], all_data["documents"], all_data["metadatas"]
-
-def load_bm25_index():
-    with open(BM25_PATH, "rb") as f:
-        data = pickle.load(f)
-    print(f"✓ BM25 index loaded ({len(data['ids'])} documents)")
-    return data["bm25"], data["ids"], data["documents"], data["metadatas"]
-
-if os.path.exists(BM25_PATH):
-    bm25, bm25_ids, bm25_docs, bm25_metas = load_bm25_index()
-else:
-    bm25, bm25_ids, bm25_docs, bm25_metas = build_bm25_index()
+    return bm25
 
 
-# ── Semantic search ───────────────────────────────────────────────
+def _filter_mask(metadatas, company, year):
+    mask = np.ones(len(metadatas), dtype=bool)
+    if company:
+        mask &= np.array([m["company"] == company for m in metadatas])
+    if year:
+        mask &= np.array([m["year"] == str(year) for m in metadatas])
+    return mask
+
+
 def semantic_search(query, company=None, year=None, n=20):
-    query_embedding = model.encode([query])[0]
-    if company and year:
-        where = {"$and": [{"company": company}, {"year": str(year)}]}
-    elif company:
-        where = {"company": company}
-    elif year:
-        where = {"year": str(year)}
-    else:
-        where = None
+    model = get_model()
+    store = load_store()
+    q_emb = model.encode([query])[0]
+    q_emb = q_emb / (np.linalg.norm(q_emb) or 1)
 
-    results = collection.query(
-        query_embeddings=[query_embedding.tolist()],
-        n_results=n,
-        where=where
-    )
-    return results["ids"][0], results["documents"][0], results["metadatas"][0]
+    mask = _filter_mask(store["metadatas"], company, year)
+    idxs = np.where(mask)[0]
+    if len(idxs) == 0:
+        return [], [], []
+
+    sims = store["embeddings"][idxs] @ q_emb
+    top_local = np.argsort(sims)[::-1][:n]
+    top_idxs = idxs[top_local]
+
+    ids = [store["ids"][i] for i in top_idxs]
+    docs = [store["documents"][i] for i in top_idxs]
+    metas = [store["metadatas"][i] for i in top_idxs]
+    return ids, docs, metas
 
 
-# ── BM25 search ───────────────────────────────────────────────────
 def bm25_search(query, company=None, year=None, n=20):
+    bm25 = get_bm25()
+    store = load_store()
     tokenized = query.lower().split()
     scores = bm25.get_scores(tokenized)
 
-    # Apply metadata filters manually
-    filtered = []
-    for idx, score in enumerate(scores):
-        meta = bm25_metas[idx]
-        if company and meta["company"] != company: continue
-        if year and meta["year"] != str(year): continue
-        filtered.append((bm25_ids[idx], score, bm25_docs[idx], meta))
+    mask = _filter_mask(store["metadatas"], company, year)
+    idxs = np.where(mask)[0]
+    filtered_scores = [(i, scores[i]) for i in idxs]
+    filtered_scores.sort(key=lambda x: x[1], reverse=True)
+    top = filtered_scores[:n]
 
-    filtered.sort(key=lambda x: x[1], reverse=True)
-    top = filtered[:n]
-
-    return (
-        [x[0] for x in top],
-        [x[2] for x in top],
-        [x[3] for x in top]
-    )
+    ids = [store["ids"][i] for i, _ in top]
+    docs = [store["documents"][i] for i, _ in top]
+    metas = [store["metadatas"][i] for i, _ in top]
+    return ids, docs, metas
 
 
-# ── Reciprocal Rank Fusion ────────────────────────────────────────
 def reciprocal_rank_fusion(sem_ids, bm25_ids_list, k=60):
     scores = {}
     for rank, doc_id in enumerate(sem_ids):
@@ -96,42 +90,19 @@ def reciprocal_rank_fusion(sem_ids, bm25_ids_list, k=60):
     return sorted(scores.items(), key=lambda x: x[1], reverse=True)
 
 
-# ── Hybrid search ─────────────────────────────────────────────────
 def hybrid_search(query, company=None, year=None, top_k=20):
-    sem_ids, sem_docs, sem_metas = semantic_search(query, company, year, n=top_k)
-    bm25_result_ids, _, _ = bm25_search(query, company, year, n=top_k)
+    sem_ids, _, _ = semantic_search(query, company, year, n=top_k)
+    bm25_ids, _, _ = bm25_search(query, company, year, n=top_k)
 
-    fused = reciprocal_rank_fusion(sem_ids, bm25_result_ids)
+    fused = reciprocal_rank_fusion(sem_ids, bm25_ids)
     top_ids = [doc_id for doc_id, _ in fused[:top_k]]
 
-    # Fetch full documents + metadata for top results
-    results = collection.get(ids=top_ids)
-    id_to_data = {
-        doc_id: (doc, meta)
-        for doc_id, doc, meta in zip(
-            results["ids"], results["documents"], results["metadatas"]
-        )
-    }
+    store = load_store()
+    id_to_idx = {id_: i for i, id_ in enumerate(store["ids"])}
 
-    return [(doc_id, id_to_data[doc_id][0], id_to_data[doc_id][1])
-            for doc_id in top_ids if doc_id in id_to_data]
-
-
-# ── Test ──────────────────────────────────────────────────────────
-if __name__ == "__main__":
-    queries = [
-        ("What are Apple's main risk factors?",          "AAPL", None),
-        ("What was Goldman Sachs net revenue in 2025?",  "GS",   "2025"),
-        ("How does Microsoft describe its cloud strategy?", "MSFT", None),
-    ]
-
-    for query, company, year in queries:
-        print(f"\n{'='*60}")
-        print(f"Query:   {query}")
-        print(f"Filters: company={company}, year={year}")
-        print(f"{'='*60}")
-
-        results = hybrid_search(query, company, year, top_k=5)
-        for i, (chunk_id, doc, meta) in enumerate(results):
-            print(f"\n  [{i+1}] {meta['company']} {meta['year']} | {meta['type']}")
-            print(f"  {doc[:250]}...")
+    results = []
+    for doc_id in top_ids:
+        if doc_id in id_to_idx:
+            i = id_to_idx[doc_id]
+            results.append((doc_id, store["documents"][i], store["metadatas"][i]))
+    return results
